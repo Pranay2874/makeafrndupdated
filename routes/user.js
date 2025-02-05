@@ -1,4 +1,3 @@
-
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -8,6 +7,11 @@ const { userauth } = require("../middleware/usermiddleware");
 
 const router = express.Router();
 
+
+router.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.path}`, req.body);
+    next();
+});
 
 router.post("/signup", async (req, res) => {
     try {
@@ -39,7 +43,6 @@ router.post("/signup", async (req, res) => {
     }
 });
 
-
 router.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -61,7 +64,6 @@ router.post("/login", async (req, res) => {
         return res.status(500).json({ message: "Server error", error: error.message });
     }
 });
-
 
 router.get("/profile", userauth, async (req, res) => {
     const user = await userModel.findById(req.userId);

@@ -8,7 +8,6 @@ const userRouter = require("./routes/user");
 
 const app = express();
 
-
 app.use(cors({ 
   origin: ["http://localhost:5173", "https://makeafrnd.onrender.com"], 
   credentials: true, 
@@ -24,12 +23,17 @@ mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log("\ MongoDB Connected!");
+    console.log(" MongoDB Connected!");
     console.log(`Connected to DB: ${mongoose.connection.db.databaseName}`);
 }).catch(err => {
     console.error(" MongoDB Connection Error:", err);
 });
 
+
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.path}`, req.body);
+    next();
+});
 
 app.use("/user", userRouter);
 
