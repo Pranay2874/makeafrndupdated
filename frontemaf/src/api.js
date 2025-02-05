@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3000/user"; // Backend base URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/user";
+
+axios.defaults.withCredentials = true; // ✅ Ensure cookies are sent with requests
 
 export const signup = async (username, password) => {
   try {
