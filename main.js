@@ -38,7 +38,8 @@ app.get("/", (req, res) => {
 });
 
 // ✅ Use dynamic PORT (Important for Render)
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;  // Remove default 3000
+
 app.listen(PORT, () => {
     console.log(` Server running on PORT ${PORT}`);
 });
