@@ -8,8 +8,9 @@ const userRouter = require("./routes/user");
 
 const app = express();
 
+
 app.use(cors({ 
-  origin: "http://localhost:5173",  
+  origin: ["http://localhost:5173", "https://makeafrnd.onrender.com"], 
   credentials: true, 
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -18,24 +19,26 @@ app.use(cors({
 app.use(express.json());  
 app.use(cookieParser());  
 
+
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log(" MongoDB Connected!");
-    console.log(` Connected to DB: ${mongoose.connection.db.databaseName}`);
+    console.log("\ MongoDB Connected!");
+    console.log(`Connected to DB: ${mongoose.connection.db.databaseName}`);
 }).catch(err => {
     console.error(" MongoDB Connection Error:", err);
 });
 
-app.use("/user", userRouter);  
+
+app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
     res.send(" Backend is Running!");
 });
 
-// ✅ FORCE PORT 3000
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(` Server running on http://localhost:${PORT}`);
+    console.log(` Server running on port ${PORT}`);
 });
