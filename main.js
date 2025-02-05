@@ -24,22 +24,22 @@ mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log(" MongoDB Connected!");
-    console.log(` Connected to DB: ${mongoose.connection.db.databaseName}`);
+    console.log("✅ MongoDB Connected!");
+    console.log(`📌 Connected to DB: ${mongoose.connection.db.databaseName}`);
 }).catch(err => {
-    console.error(" MongoDB Connection Error:", err);
+    console.error("❌ MongoDB Connection Error:", err);
 });
 
 // ✅ Routes
 app.use("/user", userRouter);  
 
 app.get("/", (req, res) => {
-    res.send(" Backend is Running!");
+    res.send("✅ Backend is Running!");
 });
 
 // ✅ Use dynamic PORT (Important for Render)
-const PORT = process.env.PORT;  // Remove default 3000
+const PORT = process.env.PORT || 10000;  // Added fallback for local testing
 
 app.listen(PORT, () => {
-    console.log(` Server running on PORT ${PORT}`);
+    console.log(`🚀 Server running on PORT ${PORT}`);
 });
