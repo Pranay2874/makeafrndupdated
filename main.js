@@ -13,7 +13,7 @@ app.use(cors({
     origin: [
         "http://localhost:5173",  
         "https://makeafrnd2.onrender.com",  
-        "https://makeafrndproject.vercel.app" 
+        "https://makeafrnd.vercel.app" 
     ], 
     credentials: true, 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
