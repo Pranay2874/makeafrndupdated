@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -9,19 +8,18 @@ const userRouter = require("./routes/user");
 
 const app = express();
 
-
+// ✅ Allow both local and deployed frontend in CORS
 app.use(cors({ 
-  origin: "http://localhost:5173",  
+  origin: ["http://localhost:5173", "https://makeafrnd.vercel.app"],  
   credentials: true, 
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-
 app.use(express.json());  
 app.use(cookieParser());  
 
-
+// ✅ Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -32,15 +30,15 @@ mongoose.connect(process.env.MONGO_URL, {
     console.error(" MongoDB Connection Error:", err);
 });
 
-
+// ✅ Routes
 app.use("/user", userRouter);  
 
 app.get("/", (req, res) => {
     res.send(" Backend is Running!");
 });
 
-
+// ✅ Use dynamic PORT (Important for Render)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(` Server running on http://localhost:${PORT}`);
+    console.log(` Server running on PORT ${PORT}`);
 });
