@@ -38,8 +38,8 @@ app.get("/", (req, res) => {
 });
 
 // ✅ Use dynamic PORT (Important for Render)
-const PORT = process.env.PORT || 10000;  // Added fallback for local testing
+const PORT = process.env.PORT || 10000;  // This is correct for local
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {   // ✅ Ensures Render can bind to the port
     console.log(`🚀 Server running on PORT ${PORT}`);
 });
