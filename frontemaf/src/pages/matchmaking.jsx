@@ -3,6 +3,7 @@ import "./matchmaking.css";
 
 function MatchmakingPage() {
     const [interest, setInterest] = useState("");
+    const [interests, setInterests] = useState([]);
     const [gender, setGender] = useState("");
     const [genderPreference, setGenderPreference] = useState("");
     const [searching, setSearching] = useState(false);
@@ -16,7 +17,7 @@ function MatchmakingPage() {
                     const response = await fetch("/api/matchmaking", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ interest, gender, genderPreference })
+                        body: JSON.stringify({ interests, gender, genderPreference })
                     });
                     const data = await response.json();
                     if (data.matchFound) {
@@ -32,9 +33,21 @@ function MatchmakingPage() {
         return () => clearInterval(interval);
     }, [searching]);
 
+    const handleInterestKeyDown = (e) => {
+        if (e.key === "Enter" && interest.trim()) {
+            setInterests([...interests, interest.trim()]);
+            setInterest("");
+            e.preventDefault();
+        }
+    };
+
+    const removeInterest = (index) => {
+        setInterests(interests.filter((_, i) => i !== index));
+    };
+
     const findMatch = () => {
-        if (!interest && (!gender || !genderPreference)) {
-            alert("Please enter an interest or specify gender preferences.");
+        if (interests.length === 0 && (!gender || !genderPreference)) {
+            alert("Please enter at least one interest or specify gender preferences.");
             return;
         }
         setSearching(true);
@@ -43,18 +56,30 @@ function MatchmakingPage() {
 
     return (
         <div className="matchmaking-container">
-           <header>
+            <header>
                 <div className="menu-icon">☰</div>
                 <h2>MakeaFrnd</h2>
-                <img className="user-profile" src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid" alt="User Profile" />
+                <div className="profile-container">
+                    <img className="user-profile" src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid" alt="User Profile" />
+                    <p className="profile-text" style={{ color: "white", fontWeight: "bold" }}>Profile</p>
+                </div>
             </header>
             
             <div className="matchmaking-box">
                 <h3>Chat with Common Interests</h3>
+                <div className="interests-container">
+                    {interests.map((int, index) => (
+                        <span key={index} className="interest-tag">
+                            {int} <button onClick={() => removeInterest(index)}>×</button>
+                        </span>
+                    ))}
+                </div>
                 <input
                     type="text"
-                    placeholder="Common Interest (e.g., Football)"
+                    placeholder="Type interest and press Enter"
+                    value={interest}
                     onChange={(e) => setInterest(e.target.value)}
+                    onKeyDown={handleInterestKeyDown}
                 />
                 <button className="chat-btn" onClick={findMatch}>Chat</button>
                 
