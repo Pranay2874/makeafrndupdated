@@ -1,79 +1,55 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { loginUser } from "../api";
+import { useNavigate, Link } from "react-router-dom"; 
+import "../App.css";
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // For showing errors
-  const navigate = useNavigate();
+function LoginPage() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setErrorMessage(""); // Clear previous errors
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        if (!username || !password) {
+            alert("Username and Password are required.");
+            return;
+        }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/user/login",
-        { username, password },
-        { withCredentials: true } // Ensures cookies are sent with the request
-      );
+        setLoading(true);
+        const result = await loginUser(username, password);
+        setLoading(false);
 
-      
-      localStorage.setItem("token", response.data.token);
-      navigate("/match"); // ✅ Redirects to the matchmaking page after login
-    } catch (error) {
-      setErrorMessage(
-        error.response?.data?.message || "❌ Invalid login. Please try again."
-      );
-    }
-  };
+        if (result.error) {
+            alert("Login failed");
+        } else {
+            navigate("/matchmaking");
+        }
+    };
 
-  return (
-    <div className="flex h-screen items-center justify-center bg-black">
-      <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-3xl font-bold text-center mb-6">MakeaFrnd</h2>
+    return (
+        <div className="login-container">
+            <div className="login-box">
+                <h2>MakeaFrnd</h2>
+                <form onSubmit={handleLogin}>
+                    <input 
+                        type="text" 
+                        placeholder="Username" 
+                        onChange={(e) => setUsername(e.target.value)} 
+                    />
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        onChange={(e) => setPassword(e.target.value)} 
+                    />
+                    <button type="submit">{loading ? "Logging in..." : "Log in"}</button>
+                </form>
+                <p>
+                    Don't have an account? <Link to="/signup">Sign up</Link>
+                </p>
+            </div>
+        </div>
+    );
+}
 
-        {errorMessage && (
-          <p className="text-red-500 text-sm text-center mb-4">{errorMessage}</p>
-        )}
-
-        <form onSubmit={handleLogin} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-4 py-2 text-gray-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 text-gray-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded transition duration-300"
-          >
-            Log in
-          </button>
-        </form>
-
-        <p className="text-center text-sm mt-4">
-          Don't have an account?{" "}
-          <a href="/signup" className="text-blue-400 hover:underline">
-            Sign up
-          </a>
-        </p>
-      </div>
-    </div>
-  );
-};
-
-export default Login;
+export default LoginPage;

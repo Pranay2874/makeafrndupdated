@@ -1,23 +1,37 @@
-import axios from "axios";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/user";
 
-axios.defaults.withCredentials = true; // ✅ Ensure cookies are sent with requests
+export const signupUser = async (username, password) => {
+    try {
+        const response = await fetch(`${BASE_URL}/api/user/signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+            credentials: "include",
+        });
 
-export const signup = async (username, password) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/signup`, { username, password });
-    return response.data;
-  } catch (error) {
-    throw error.response ? error.response.data : { message: "Signup failed" };
-  }
+        if (!response.ok) throw new Error("Signup failed");
+        return await response.json();
+    } catch (error) {
+        console.error("API Error:", error.message);
+        return { error: error.message };
+    }
 };
 
-export const login = async (username, password) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/login`, { username, password }, { withCredentials: true });
-    return response.data;
-  } catch (error) {
-    throw error.response ? error.response.data : { message: "Login failed" };
-  }
+
+export const loginUser = async (username, password) => {
+    try {
+        const response = await fetch(`${BASE_URL}/api/user/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+            credentials: "include",
+        });
+
+        if (!response.ok) throw new Error("Login failed");
+        return await response.json();
+    } catch (error) {
+        console.error("API Error:", error.message);
+        return { error: error.message };
+    }
 };

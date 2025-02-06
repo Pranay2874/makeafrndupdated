@@ -7,46 +7,29 @@ const userRouter = require("./routes/user");
 
 const app = express();
 
-// ✅ Updated CORS to include both frontend & backend URLs
-app.use(cors({ 
-  origin: [
-    "http://localhost:5173",          // Local development
-    "https://makeafrnd.vercel.app",   // Frontend URL on Vercel
-    "https://makeafrnd2.onrender.com" // Backend URL on Render
-  ],  
-  credentials: true, 
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ Connect to MongoDB
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log("✅ MongoDB Connected!");
-}).catch(err => {
-    console.error("❌ MongoDB Connection Error:", err);
-});
 
-// ✅ Log incoming requests for debugging
-app.use((req, res, next) => {
-    console.log(`📢 Incoming request: ${req.method} ${req.path}`, req.body);
-    next();
-});
+app.use("/api/user", userRouter);
 
-// ✅ Routes
-app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
-    res.send("✅ Backend is Running!");
+    res.send("MakeaFrnd Backend is Running 🚀");
 });
 
-// ✅ Ensure the backend uses the correct PORT
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => console.log("MongoDB connected successfully"))
+    .catch(err => console.error(" MongoDB connection error:", err));
+
+app.use((err, req, res, next) => {
+    console.error("Error:", err.message);
+    res.status(500).json({ message: "Internal Server Error", error: err.message });
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
