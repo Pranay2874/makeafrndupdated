@@ -8,6 +8,24 @@ function MatchmakingPage() {
     const [genderPreference, setGenderPreference] = useState("");
     const [searching, setSearching] = useState(false);
     const [match, setMatch] = useState(null);
+    const [username, setUsername] = useState("User"); // Default username
+
+    useEffect(() => {
+        // Fetch logged-in user's username from API or local storage
+        const fetchUsername = async () => {
+            try {
+                const response = await fetch("/api/getUsername"); // Adjust API endpoint as needed
+                const data = await response.json();
+                if (data.username) {
+                    setUsername(data.username);
+                }
+            } catch (error) {
+                console.error("Error fetching username:", error);
+            }
+        };
+
+        fetchUsername();
+    }, []);
 
     useEffect(() => {
         let interval;
@@ -61,7 +79,7 @@ function MatchmakingPage() {
                 <h2>MakeaFrnd</h2>
                 <div className="profile-container">
                     <img className="user-profile" src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid" alt="User Profile" />
-                    <p className="profile-text" style={{ color: "white", fontWeight: "bold" }}>Profile</p>
+                    <p className="username-text" style={{ color: "white", fontWeight: "bold" }}>{username}</p>
                 </div>
             </header>
             
