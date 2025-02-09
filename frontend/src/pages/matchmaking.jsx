@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import "./matchmaking.css";
+import { useNavigate } from "react-router-dom";
+import "../matchmaking.css";
 
 function MatchmakingPage() {
     const [interest, setInterest] = useState("");
@@ -8,9 +9,7 @@ function MatchmakingPage() {
     const [genderPreference, setGenderPreference] = useState("");
     const [searching, setSearching] = useState(false);
     const [match, setMatch] = useState(null);
-    
-
-  
+    const navigate = useNavigate();
 
     useEffect(() => {
         let interval;
@@ -62,12 +61,16 @@ function MatchmakingPage() {
             <header>
                 <div className="menu-icon">☰</div>
                 <h2>MakeaFrnd</h2>
-                <div className="profile-container">
-                    <img className="user-profile" src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid" alt="User Profile" />
-                    <p className="username-text" style={{ color: "white", fontWeight: "bold" }}>Profile</p>
+                <div  onClick={() => navigate("/profile")}>
+                    <img 
+                        className="user-profile" 
+                        src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid" 
+                        alt="User Profile" 
+                    />
+                    <span className="username-text">Profile</span>
                 </div>
             </header>
-            
+
             <div className="matchmaking-box">
                 <h3>Chat with Common Interests</h3>
                 <div className="interests-container">

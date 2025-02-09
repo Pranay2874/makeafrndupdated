@@ -1,15 +1,15 @@
+import { signupUser } from "../api";  // Make sure this matches api.js
 import { useState } from "react";
-import { loginUser } from "../api";
 import { useNavigate, Link } from "react-router-dom"; 
 import "../App.css";
 
-function LoginPage() {
+function SignupPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
         if (!username || !password) {
             alert("Username and Password are required.");
@@ -17,11 +17,11 @@ function LoginPage() {
         }
 
         setLoading(true);
-        const result = await loginUser(username, password);
+        const result = await signupUser(username, password);
         setLoading(false);
 
         if (result.error) {
-            alert("Login failed");
+            alert("Signup failed");
         } else {
             navigate("/matchmaking");
         }
@@ -31,7 +31,7 @@ function LoginPage() {
         <div className="login-container">
             <div className="login-box">
                 <h2>MakeaFrnd</h2>
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleSignup}>
                     <input 
                         type="text" 
                         placeholder="Username" 
@@ -42,14 +42,14 @@ function LoginPage() {
                         placeholder="Password" 
                         onChange={(e) => setPassword(e.target.value)} 
                     />
-                    <button type="submit">{loading ? "Logging in..." : "Log in"}</button>
+                    <button type="submit">{loading ? "Signing up..." : "Sign Up"}</button>
                 </form>
                 <p>
-                    Don't have an account? <Link to="/signup">Sign up</Link>
+                    Already have an account? <Link to="/login">Log in</Link>
                 </p>
             </div>
         </div>
     );
 }
 
-export default LoginPage;
+export default SignupPage;

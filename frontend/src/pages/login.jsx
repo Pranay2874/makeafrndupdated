@@ -1,15 +1,15 @@
+import { loginUser } from "../api";  // ✅ Now `loginUser` exists in api.js
 import { useState } from "react";
-import { signupUser } from "../api";
 import { useNavigate, Link } from "react-router-dom"; 
 import "../App.css";
 
-function SignupPage() {
+function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const handleSignup = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         if (!username || !password) {
             alert("Username and Password are required.");
@@ -17,21 +17,23 @@ function SignupPage() {
         }
 
         setLoading(true);
-        const result = await signupUser(username, password);
+        const result = await loginUser(username, password);
+        localStorage.setItem("token" ,result.data.token);
         setLoading(false);
 
         if (result.error) {
-            alert("Signup failed");
+            alert("Login failed");
         } else {
             navigate("/matchmaking");
         }
     };
 
+
     return (
         <div className="login-container">
             <div className="login-box">
                 <h2>MakeaFrnd</h2>
-                <form onSubmit={handleSignup}>
+                <form onSubmit={handleLogin}>
                     <input 
                         type="text" 
                         placeholder="Username" 
@@ -42,14 +44,14 @@ function SignupPage() {
                         placeholder="Password" 
                         onChange={(e) => setPassword(e.target.value)} 
                     />
-                    <button type="submit">{loading ? "Signing up..." : "Sign Up"}</button>
+                    <button type="submit">{loading ? "Logging in..." : "Log in"}</button>
                 </form>
                 <p>
-                    Already have an account? <Link to="/login">Log in</Link>
+                    Do noave an account? <Link to="/signup">Sign up</Link>
                 </p>
             </div>
         </div>
     );
 }
 
-export default SignupPage;
+export default LoginPage;
