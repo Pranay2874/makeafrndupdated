@@ -43,7 +43,8 @@ export const loginUser = async (username, password) => {
         console.log("🔵 Login API Response:", data); // Debugging API response
 
         if (!response.ok) {
-            throw new Error(`Login failed: ${data.message}`);
+            throw new Error(data.message);
+
         }
 
         return data;  

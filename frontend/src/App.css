@@ -66,3 +66,17 @@
 .login-box a:hover {
   text-decoration: underline;
 }
+
+
+.error-message {
+  color: rgb(218, 40, 40) !important;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.error-input {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+}
