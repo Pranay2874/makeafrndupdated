@@ -18,16 +18,24 @@ function LoginPage() {
 
         setLoading(true);
         const result = await loginUser(username, password);
-        localStorage.setItem("token" ,result.data.token);
         setLoading(false);
 
+        console.log("🔵 Login Response:", result); // Debugging API response
+
         if (result.error) {
-            alert("Login failed");
-        } else {
+            alert("Login failed: " + result.error);
+            return;
+        }
+
+        if (result.token) {
+            localStorage.setItem("token", result.token);
+            console.log("✅ Token Stored:", result.token);
             navigate("/matchmaking");
+        } else {
+            console.error("❌ Token missing in response");
+            alert("Login failed: No token received");
         }
     };
-
 
     return (
         <div className="login-container">
@@ -47,7 +55,7 @@ function LoginPage() {
                     <button type="submit">{loading ? "Logging in..." : "Log in"}</button>
                 </form>
                 <p>
-                    Do noave an account? <Link to="/signup">Sign up</Link>
+                    Do not have an account? <Link to="/signup">Sign up</Link>
                 </p>
             </div>
         </div>

@@ -1,35 +1,40 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+import { changeUsername } from "../api";
 
 function ChangeUsernamePage() {
     const [newUsername, setNewUsername] = useState("");
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
     const handleUsernameChange = async () => {
-        try {
-            const response = await fetch(`${BASE_URL}/api/user/change-username`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ newUsername }),
-                credentials: "include",
-            });
+        if (!newUsername.trim()) {
+            setMessage("Username cannot be empty");
+            return;
+        }
 
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message);
-
-            navigate("/profile");
-        } catch (error) {
-            alert(error.message);
+        const response = await changeUsername(newUsername);
+        
+        if (response.error) {
+            setMessage(response.error);
+        } else {
+            setMessage("Username changed successfully!");
+            setTimeout(() => navigate("/profile"), 1500);
         }
     };
 
     return (
-        <div>
+        <div className="change-username-container">
             <h2>Change Username</h2>
-            <input value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
+            <input
+                type="text"
+                placeholder="New Username"
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+                required
+            />
             <button onClick={handleUsernameChange}>Submit</button>
+            {message && <p>{message}</p>}
         </div>
     );
 }

@@ -12,12 +12,7 @@ function AnimatedRoutes() {
 
     return (
         <TransitionGroup>
-            <CSSTransition
-                key={location.pathname}
-                classNames="fade"
-                timeout={200}
-                nodeRef={useRef(null)} // ✅ Fix `findDOMNode` issue
-            >
+            <CSSTransition key={location.pathname} classNames="fade" timeout={200} nodeRef={useRef(null)}>
                 <Routes location={location}>
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/login" element={<Navigate to="/" />} />

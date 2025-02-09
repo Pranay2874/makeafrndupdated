@@ -25,6 +25,9 @@ export const signupUser = async (username, password) => {
     }
 };
 
+
+
+
 export const loginUser = async (username, password) => {
     try {
         console.log("🔵 Login Request:", { username });
@@ -37,13 +40,13 @@ export const loginUser = async (username, password) => {
         });
 
         const data = await response.json();
+        console.log("🔵 Login API Response:", data); // Debugging API response
 
         if (!response.ok) {
             throw new Error(`Login failed: ${data.message}`);
         }
 
-        console.log("✅ Login Successful");
-        return data;
+        return data;  // ✅ Ensure correct return
     } catch (error) {
         console.error("❌ API Error (loginUser):", error.message);
         return { error: error.message };
@@ -69,6 +72,33 @@ export const getUserProfile = async () => {
         return data;
     } catch (error) {
         console.error("❌ API Error (getUserProfile):", error.message);
+        return { error: error.message };
+    }
+};
+
+
+
+export const changeUsername = async (newUsername) => {
+    try {
+        console.log("🔵 Change Username Request:", newUsername);
+
+        const response = await fetch(`${BASE_URL}/api/user/change-username`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ newUsername }),
+            credentials: "include",
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
+
+        console.log("✅ Username Updated:", data);
+        return data;
+    } catch (error) {
+        console.error("❌ API Error (changeUsername):", error.message);
         return { error: error.message };
     }
 };

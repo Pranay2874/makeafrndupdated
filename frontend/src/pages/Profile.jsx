@@ -1,6 +1,3 @@
-
-
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile, logoutUser } from "../api";
@@ -45,7 +42,13 @@ function ProfilePage() {
         );
     }
 
-    return <h1>Welcome, {username}!</h1>;
+    return (
+        <div className="profile-container">
+            <h1>Welcome, {username}!</h1>
+            <button className="profile-btn" onClick={() => navigate("/change-username")}>Change Username</button>
+            <button className="profile-btn logout-btn" onClick={handleLogout}>Logout</button>
+        </div>
+    );
 }
 
 export default ProfilePage;
