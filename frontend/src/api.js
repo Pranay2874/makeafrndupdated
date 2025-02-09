@@ -14,7 +14,7 @@ export const signupUser = async (username, password) => {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(`Signup failed: ${data.message}`);
+            throw new Error(data.message);
         }
 
         console.log(" Signup Successful:", data);
@@ -40,7 +40,7 @@ export const loginUser = async (username, password) => {
         });
 
         const data = await response.json();
-        console.log("🔵 Login API Response:", data); // Debugging API response
+        console.log(" Login API Response:", data); // Debugging API response
 
         if (!response.ok) {
             throw new Error(data.message);

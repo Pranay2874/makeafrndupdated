@@ -1,14 +1,19 @@
-import { loginUser } from "../api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { loginUser } from "../api";
 import "../App.css";
 
 function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");  // State to store error message
+    const [error, setError] = useState(""); 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        setError("");
+    }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -21,28 +26,18 @@ function LoginPage() {
         const result = await loginUser(username, password);
         setLoading(false);
 
-        console.log(" Login Response:", result); // Debugging API response
-
         if (result.error) {
             setError(result.error);
-
-            return;
-        }
-
-        if (result.token) {
-            localStorage.setItem("token", result.token);
-            console.log(" Token Stored:", result.token);
-            navigate("/matchmaking");
         } else {
-            console.error(" Token missing in response");
-            setError("Login failed: No token received");
+            localStorage.setItem("token", result.token);
+            navigate("/matchmaking");
         }
     };
 
     return (
         <div className="login-container">
             <div className="login-box">
-                <h2>MakeaFrnd</h2> {/* Changed heading */}
+                <h2>MakeaFrnd</h2>
                 <form onSubmit={handleLogin}>
                     <input 
                         type="text" 
@@ -56,11 +51,11 @@ function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)} 
                         className={error ? "error-input" : ""}
                     />
-                    {error && <p className="error-message">{error}</p>}  {/* Error in red */}
+                    {error && <p className="error-message">{error}</p>}
                     <button type="submit">{loading ? "Logging in..." : "Log in"}</button>
                 </form>
                 <p>
-                    Do not have an account? <Link to="/signup">Sign up</Link>
+                    Don't have an account? <Link to="/signup">Sign up</Link>
                 </p>
             </div>
         </div>
