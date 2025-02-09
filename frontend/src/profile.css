@@ -36,11 +36,11 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 100%;
+    width: 25%;
   }
   
   .profile-btn {
-    width: 100%;
+    width: 25%;
     padding: 12px;
     background-color: #3b82f6;
     color: white;
