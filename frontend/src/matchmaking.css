@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #0f172a; /* Dark background */
+  background-color: #0f172a; 
   padding: 20px;
 }
 
@@ -15,7 +15,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px; /* Increased padding for better spacing */
+  padding: 20px 40px; 
   background-color: #1e293b;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -29,10 +29,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  cursor: pointer; /* ✅ Ensures clicking is possible */
+  cursor: pointer; 
   background: transparent; /* Ensures no white background */
   padding: 0;
-  gap: 8px; /* Adds space between icon and text */
+  gap: 8px; 
   max-width: unset;
   margin: unset;
 }
@@ -41,15 +41,15 @@ header {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2px solid white; /* Adds a nice border */
-  cursor: pointer; /* ✅ Makes the cursor change to pointer */
+  border: 2px solid white; 
+  cursor: pointer; 
 }
 
 .username-text {
   color: white;
   font-weight: bold;
   font-size: 16px;
-  cursor: pointer; /* ✅ Ensures text is also clickable */
+  cursor: pointer; 
 }
 
 h2 {
@@ -57,19 +57,19 @@ h2 {
   font-size: 24px;
   font-weight: bold;
   flex-grow: 1;
-  text-align: center; /* Center aligns title */
+  text-align: center; 
 }
 
 /* Matchmaking Box */
 .matchmaking-box {
   background-color: #1e293b;
-  padding: 30px; /* Increased padding for better spacing */
+  padding: 30px; 
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
   text-align: center;
   width: 90%;
   max-width: 400px;
-  margin-top: 20px; /* Added margin to create space below header */
+  margin-top: 20px; 
 }
 
 h3, h4 {
@@ -79,7 +79,7 @@ h3, h4 {
 input {
   width: 100%;
   padding: 10px;
-  margin: 15px 0; /* Increased margin for more spacing */
+  margin: 15px 0; 
   border-radius: 5px;
   border: none;
   font-size: 16px;
@@ -91,8 +91,8 @@ input {
 .gender-selection {
   display: flex;
   justify-content: center;
-  gap: 15px; /* Increased gap for better spacing */
-  margin-bottom: 15px; /* Added extra margin */
+  gap: 15px; 
+  margin-bottom: 15px; 
 }
 
 .gender-selection button {
@@ -111,7 +111,7 @@ input {
 .chat-btn {
   width: 100%;
   padding: 12px;
-  margin-top: 15px; /* Added margin for better spacing */
+  margin-top: 15px; 
   background-color: #3b82f6;
   color: white;
   border: none;
@@ -127,7 +127,7 @@ input {
 .random-chat-btn {
   width: 100%;
   padding: 12px;
-  margin-top: 15px; /* Added margin for spacing */
+  margin-top: 15px; 
   background-color: #22c55e;
   color: white;
   border: none;

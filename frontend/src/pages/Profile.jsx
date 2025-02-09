@@ -13,7 +13,7 @@ function ProfilePage() {
             const data = await getUserProfile();
 
             if (data.error) {
-                console.error("❌ Error fetching user profile:", data.error);
+                console.error(" Error fetching user profile:", data.error);
                 setError(true);
             } else {
                 setUsername(data.username);
@@ -44,7 +44,7 @@ function ProfilePage() {
 
     return (
         <div className="profile-container">
-            <h1>Welcome, {username}!</h1>
+            <h1 className="profile-username">Welcome, {username}!</h1> {/*  Applied class here */}
             <button className="profile-btn" onClick={() => navigate("/change-username")}>Change Username</button>
             <button className="profile-btn logout-btn" onClick={handleLogout}>Logout</button>
         </div>

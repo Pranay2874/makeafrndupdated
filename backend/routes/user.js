@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
 
         const token = jwt.sign({ userId: user._id }, JWT_USER_PASSWORD, { expiresIn: "1h" });
 
-        // ✅ Set token in HTTP-only cookie
+        // Set token in HTTP-only cookie
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
             maxAge: 3600000 // 1 hour
         });
 
-        // ✅ Also send the token in the response body
+        // Also send the token in the response body
         res.status(200).json({ message: "Login successful", token });
     } catch (error) {
         res.status(500).json({ message: "Error logging in", error: error.message });
@@ -72,11 +72,11 @@ router.post("/login", async (req, res) => {
 });
 router.get("/profile", async (req, res) => {
     try {
-        console.log("🔵 Incoming Profile Request");
+        console.log("Incoming Profile Request");
 
         const token = req.cookies.token;
         if (!token) {
-            console.log("❌ No token provided");
+            console.log(" No token provided");
             return res.status(401).json({ message: "Unauthorized: No token provided" });
         }
 
@@ -84,23 +84,23 @@ router.get("/profile", async (req, res) => {
         try {
             decoded = jwt.verify(token, JWT_USER_PASSWORD);
         } catch (err) {
-            console.error("❌ JWT Verification Failed:", err.message);
+            console.error(" JWT Verification Failed:", err.message);
             return res.status(401).json({ message: "Unauthorized: Invalid token" });
         }
 
-        console.log("✅ Token Verified, User ID:", decoded.userId);
+        console.log("Token Verified, User ID:", decoded.userId);
 
         const user = await userModel.findById(decoded.userId);
         if (!user) {
-            console.log("❌ User not found in database");
+            console.log(" User not found in database");
             return res.status(404).json({ message: "User not found" });
         }
 
-        console.log("✅ User Found:", user.username);
+        console.log(" User Found:", user.username);
         res.status(200).json({ username: user.username });
 
     } catch (error) {
-        console.error("❌ Profile Fetch Error:", error.message);
+        console.error("Profile Fetch Error:", error.message);
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 });
@@ -117,7 +117,7 @@ router.post("/logout", (req, res) => {
 
 
 
-// ✅ Change Username Route
+//  Change Username Route
 router.post("/change-username", async (req, res) => {
     try {
         const { newUsername } = req.body;
@@ -146,7 +146,7 @@ router.post("/change-username", async (req, res) => {
             return res.status(400).json({ message: "Username already taken" });
         }
 
-        // ✅ Update username and return updated user
+        //  Update username and return updated user
         const updatedUser = await userModel.findByIdAndUpdate(
             userId,
             { username: newUsername.toLowerCase() },

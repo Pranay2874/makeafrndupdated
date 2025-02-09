@@ -1,4 +1,4 @@
-import { loginUser } from "../api";  // ✅ Now `loginUser` exists in api.js
+import { loginUser } from "../api";  //  Now `loginUser` exists in api.js
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom"; 
 import "../App.css";
@@ -20,7 +20,7 @@ function LoginPage() {
         const result = await loginUser(username, password);
         setLoading(false);
 
-        console.log("🔵 Login Response:", result); // Debugging API response
+        console.log(" Login Response:", result); // Debugging API response
 
         if (result.error) {
             alert("Login failed: " + result.error);
@@ -29,10 +29,10 @@ function LoginPage() {
 
         if (result.token) {
             localStorage.setItem("token", result.token);
-            console.log("✅ Token Stored:", result.token);
+            console.log(" Token Stored:", result.token);
             navigate("/matchmaking");
         } else {
-            console.error("❌ Token missing in response");
+            console.error(" Token missing in response");
             alert("Login failed: No token received");
         }
     };
