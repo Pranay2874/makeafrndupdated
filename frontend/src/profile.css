@@ -1,84 +1,89 @@
 /* Profile Page Layout */
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #0f172a; 
-    padding: 20px;
-  }
-  
-  /* Profile Box */
-  .profile-box {
-    background-color: #aebed8;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-  }
-  
-  
-  
-  /* Username */
-  .profile-username {
-    color: white !important; 
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #0f172a;
+  padding: 20px;
 }
-  
-  /* Buttons */
-  .profile-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 25%;
+
+/* Profile Box */
+.profile-box {
+  background-color: #aebed8;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Username */
+.profile-username {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Buttons Container */
+.profile-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  align-items: center;
+  width: 100%;
+}
+
+/* Profile Buttons */
+.profile-btn {
+  width: 25%;
+  min-width: 120px; 
+  padding: 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.profile-btn:hover {
+  background-color: #2563eb;
+}
+
+.change-username-btn {
+  background-color: #475569;
+}
+
+.change-username-btn:hover {
+  background-color: #64748b;
+}
+
+.logout-btn {
+  background-color: #ef4444;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+
+
+@media (max-width: 500px) {
+  .profile-box {
+      padding: 20px;
   }
+
+  .profile-username {
+      font-size: 20px;
+  }
+
   
   .profile-btn {
-    width: 25%;
-    padding: 12px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
+      width: 50%;
   }
-  
-  .profile-btn:hover {
-    background-color: #2563eb;
-  }
-  
-  .change-username-btn {
-    background-color: #475569;
-  }
-  
-  .change-username-btn:hover {
-    background-color: #64748b;
-  }
-  
-  .logout-btn {
-    background-color: #ef4444;
-  }
-  
-  .logout-btn:hover {
-    background-color: #dc2626;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 500px) {
-    .profile-box {
-      padding: 20px;
-    }
-  
-    .profile-username {
-      font-size: 20px;
-    }
-  }
-  
+}

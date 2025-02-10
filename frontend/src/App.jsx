@@ -1,18 +1,21 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import LoginPage from "./pages/login";
-import SignupPage from "./pages/signup";
-import MatchmakingPage from "./pages/matchmaking";
-import ProfilePage from "./pages/Profile";
-import ChangeUsernamePage from "./pages/ChangeUsername";
-import { useRef } from "react";
+import { lazy, Suspense, useRef } from "react";
+
+// Lazy Load Pages for Performance Optimization
+const LoginPage = lazy(() => import("./pages/login"));
+const SignupPage = lazy(() => import("./pages/signup"));
+const MatchmakingPage = lazy(() => import("./pages/matchmaking"));
+const ProfilePage = lazy(() => import("./pages/Profile"));
+const ChangeUsernamePage = lazy(() => import("./pages/ChangeUsername"));
 
 function AnimatedRoutes() {
     const location = useLocation();
+    const nodeRef = useRef(null); // Ensure ref is properly handled
 
     return (
         <TransitionGroup>
-            <CSSTransition key={location.pathname} classNames="fade" timeout={200} nodeRef={useRef(null)}>
+            <CSSTransition key={location.pathname} classNames="fade" timeout={200} nodeRef={nodeRef}>
                 <Routes location={location}>
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/login" element={<Navigate to="/" />} />
@@ -29,7 +32,9 @@ function AnimatedRoutes() {
 function App() {
     return (
         <Router>
-            <AnimatedRoutes />
+            <Suspense fallback={<div>Loading...</div>}>
+                <AnimatedRoutes />
+            </Suspense>
         </Router>
     );
 }
